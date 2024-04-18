@@ -14,6 +14,7 @@ def after_insert(doc, method):
             si.customer = so.customer
             si.custom_so = so.name
             si.set_warehouse = so.set_warehouse
+            si.order_type = so.order_type
 
             for items in so.items:
                 it = si.append("items", {})
@@ -31,6 +32,7 @@ def after_insert(doc, method):
             dn.customer = so.customer
             dn.custom_so = so.name
             dn.set_warehouse = so.set_warehouse
+
 
             for items in so.items:
                 it = dn.append("items", {})
