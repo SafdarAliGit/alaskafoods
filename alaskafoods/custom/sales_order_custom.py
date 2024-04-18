@@ -20,6 +20,7 @@ def after_insert(doc, method):
                 it = si.append("items", {})
                 it.sales_order = so.name
                 it.item_code = items.item_code
+                it.item_name = items.item_name
                 it.qty = items.qty
                 it.rate = items.rate
                 it.amount = items.amount
@@ -38,6 +39,7 @@ def after_insert(doc, method):
                 it = dn.append("items", {})
                 it.against_sales_order = so.name
                 it.item_code = items.item_code
+                it.item_name = items.item_name
                 it.qty = items.qty
                 it.rate = items.rate
                 it.amount = items.amount
