@@ -26,24 +26,24 @@ def after_insert(doc, method):
         dn.submit()
         # ------Sales Invoice--------
 
-        # si = frappe.new_doc("Sales Invoice")
-        # si.custom_sales_person = so.custom_sales_person
-        # si.posting_date = so.transaction_date
-        # si.customer = so.customer
-        # si.custom_so = so.name
-        # si.set_warehouse = so.set_warehouse
-        # si.order_type = so.order_type
-        #
-        # for items in so.items:
-        #     it = si.append("items", {})
-        #     it.sales_order = so.name
-        #     it.item_code = items.item_code
-        #     it.item_name = items.item_name
-        #     it.qty = items.qty
-        #     it.rate = items.rate
-        #     it.amount = items.amount
-        #     it.so_detail = items.name
-        # si.submit()
+        si = frappe.new_doc("Sales Invoice")
+        si.custom_sales_person = so.custom_sales_person
+        si.posting_date = so.transaction_date
+        si.customer = so.customer
+        si.custom_so = so.name
+        si.set_warehouse = so.set_warehouse
+        si.order_type = so.order_type
+
+        for items in so.items:
+            it = si.append("items", {})
+            it.sales_order = so.name
+            it.item_code = items.item_code
+            it.item_name = items.item_name
+            it.qty = items.qty
+            it.rate = items.rate
+            it.amount = items.amount
+            it.so_detail = items.name
+        si.submit()
 
     except Exception as e:
         frappe.throw(f"An error occurred: {e}")
