@@ -22,6 +22,7 @@ def after_insert(doc, method):
             it.qty = items.qty
             it.rate = items.rate
             it.amount = items.amount
+            it.so_detail = items.name
         dn.submit()
         # ------Sales Invoice--------
 
