@@ -23,6 +23,7 @@ def after_insert(doc, method):
             it.rate = items.rate
             it.amount = items.amount
             it.so_detail = items.name
+            it.uom = items.uom
         dn.submit()
         # ------Sales Invoice--------
 
@@ -43,6 +44,7 @@ def after_insert(doc, method):
             it.rate = items.rate
             it.amount = items.amount
             it.so_detail = items.name
+            it.uom = items.uom
         si.submit()
 
     except Exception as e:
