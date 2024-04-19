@@ -41,7 +41,7 @@ def after_insert(doc, method):
             it.qty = items.qty
             it.rate = items.rate
             it.amount = items.amount
-            it.so_detail = items.item_code
+            it.so_detail = so.name
         si.submit()
 
     except Exception as e:
