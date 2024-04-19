@@ -2,50 +2,52 @@ import frappe
 
 
 def after_insert(doc, method):
-    try:
-        # Submit the Sales Order
+    if doc.docstatus == 0:
         doc.submit()
-        # ------Delivery Note--------
-        so = frappe.get_doc("Sales Order", doc.name)
-        dn = frappe.new_doc("Delivery Note")
-        dn.custom_sales_person = so.custom_sales_person
-        dn.posting_date = so.transaction_date
-        dn.customer = so.customer
-        dn.custom_so = so.name
-        dn.set_warehouse = so.set_warehouse
-
-        for items in so.items:
-            it = dn.append("items", {})
-            it.against_sales_order = so.name
-            it.item_code = items.item_code
-            it.item_name = items.item_name
-            it.qty = items.qty
-            it.rate = items.rate
-            it.amount = items.amount
-        dn.submit()
-        # ------Sales Invoice--------
-
-        si = frappe.new_doc("Sales Invoice")
-        si.custom_sales_person = so.custom_sales_person
-        si.posting_date = so.transaction_date
-        si.customer = so.customer
-        si.custom_so = so.name
-        si.set_warehouse = so.set_warehouse
-        si.order_type = so.order_type
-
-        for items in so.items:
-            it = si.append("items", {})
-            it.sales_order = so.name
-            it.item_code = items.item_code
-            it.item_name = items.item_name
-            it.qty = items.qty
-            it.rate = items.rate
-            it.amount = items.amount
-            it.so_detail = so.name
-        si.submit()
-
-    except Exception as e:
-        frappe.throw(f"An error occurred: {e}")
+    # try:
+    #     # Submit the Sales Order
+    #     doc.submit()
+    #     # ------Delivery Note--------
+    #     so = frappe.get_doc("Sales Order", doc.name)
+    #     dn = frappe.new_doc("Delivery Note")
+    #     dn.custom_sales_person = so.custom_sales_person
+    #     dn.posting_date = so.transaction_date
+    #     dn.customer = so.customer
+    #     dn.custom_so = so.name
+    #     dn.set_warehouse = so.set_warehouse
+    #
+    #     for items in so.items:
+    #         it = dn.append("items", {})
+    #         it.against_sales_order = so.name
+    #         it.item_code = items.item_code
+    #         it.item_name = items.item_name
+    #         it.qty = items.qty
+    #         it.rate = items.rate
+    #         it.amount = items.amount
+    #     dn.submit()
+    #     # ------Sales Invoice--------
+    #
+    #     si = frappe.new_doc("Sales Invoice")
+    #     si.custom_sales_person = so.custom_sales_person
+    #     si.posting_date = so.transaction_date
+    #     si.customer = so.customer
+    #     si.custom_so = so.name
+    #     si.set_warehouse = so.set_warehouse
+    #     si.order_type = so.order_type
+    #
+    #     for items in so.items:
+    #         it = si.append("items", {})
+    #         it.sales_order = so.name
+    #         it.item_code = items.item_code
+    #         it.item_name = items.item_name
+    #         it.qty = items.qty
+    #         it.rate = items.rate
+    #         it.amount = items.amount
+    #         it.so_detail = so.name
+    #     si.submit()
+    #
+    # except Exception as e:
+    #     frappe.throw(f"An error occurred: {e}")
 
 # def on_update(doc, method):
 #     try:
