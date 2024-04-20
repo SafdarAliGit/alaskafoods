@@ -9,7 +9,7 @@ def after_insert(doc, method):
         so = frappe.get_doc("Sales Order", doc.name)
         dn = frappe.new_doc("Delivery Note")
         dn.custom_sales_person = so.custom_sales_person
-        dn.posting_date = so.transaction_date
+        dn.posting_date = so.delivery_date
         dn.customer = so.customer
         dn.custom_so = so.name
         dn.set_warehouse = so.set_warehouse
@@ -29,7 +29,7 @@ def after_insert(doc, method):
 
         si = frappe.new_doc("Sales Invoice")
         si.custom_sales_person = so.custom_sales_person
-        si.posting_date = so.transaction_date
+        si.posting_date = so.delivery_date
         si.customer = so.customer
         si.custom_so = so.name
         si.set_warehouse = so.set_warehouse
