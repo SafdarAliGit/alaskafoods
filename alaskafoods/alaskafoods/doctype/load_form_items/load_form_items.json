@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-04-22 07:10:08.859201",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_code",
+  "item_name",
+  "pack_size",
+  "issued_units",
+  "free_units",
+  "total_units",
+  "units",
+  "carton",
+  "returned",
+  "returned_units",
+  "returned_cartons"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "pack_size",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Pack Size",
+   "read_only": 1
+  },
+  {
+   "fieldname": "issued_units",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Issued Units",
+   "read_only": 1
+  },
+  {
+   "fieldname": "free_units",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Free Units",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_units",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Total Units",
+   "read_only": 1
+  },
+  {
+   "fieldname": "carton",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Carton",
+   "read_only": 1
+  },
+  {
+   "fieldname": "returned_units",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Ret. Units",
+   "read_only": 1
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "returned_cartons",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Ret. Cartons",
+   "read_only": 1
+  },
+  {
+   "fieldname": "units",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Units",
+   "read_only": 1
+  },
+  {
+   "fieldname": "returned",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Returned",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-04-22 14:39:52.165709",
+ "modified_by": "Administrator",
+ "module": "alaskafoods",
+ "name": "Load Form Items",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

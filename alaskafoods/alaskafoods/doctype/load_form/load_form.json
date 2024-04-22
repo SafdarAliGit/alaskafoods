@@ -1,0 +1,128 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "LF-.DD.-.MM.-.YYYY.-.######",
+ "creation": "2024-04-22 14:19:51.068422",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "amended_from",
+  "sales_person",
+  "column_break_cgte",
+  "driver_name",
+  "column_break_5per",
+  "vehicle",
+  "column_break_auop",
+  "delivery_date",
+  "column_break_i485",
+  "load_form_no",
+  "section_break_t6f2",
+  "load_form_items",
+  "section_break_oj99",
+  "load_form_invoices"
+ ],
+ "fields": [
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Load Form",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name"
+  },
+  {
+   "default": "None",
+   "fieldname": "load_form_no",
+   "fieldtype": "Data",
+   "label": "Load Form #",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "delivery_date",
+   "fieldtype": "Date",
+   "label": "Delivery Date"
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Data",
+   "label": "Vehicle"
+  },
+  {
+   "fieldname": "column_break_cgte",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_5per",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_i485",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_auop",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_person",
+   "fieldtype": "Link",
+   "label": "Sales Person",
+   "options": "Sales Person"
+  },
+  {
+   "fieldname": "load_form_items",
+   "fieldtype": "Table",
+   "label": "Load Form Items",
+   "options": "Load Form Items"
+  },
+  {
+   "fieldname": "section_break_oj99",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "load_form_invoices",
+   "fieldtype": "Table",
+   "label": "Load Form Invoices",
+   "options": "Load Form Invoices"
+  },
+  {
+   "fieldname": "section_break_t6f2",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-04-22 14:47:00.596755",
+ "modified_by": "Administrator",
+ "module": "alaskafoods",
+ "name": "Load Form",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
