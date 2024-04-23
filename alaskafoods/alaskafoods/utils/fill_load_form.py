@@ -25,7 +25,7 @@ def fill_load_form(**args):
     WHERE
         si.docstatus = 1 AND
         si.custom_sales_person = %s AND 
-        si.posting_date = %s
+        DATE(si.posting_date) = %s
     GROUP BY
         sii.item_code,sii.conversion_factor,sii.item_name
     """
@@ -36,7 +36,7 @@ def fill_load_form(**args):
             i['units'] = pcs_to_carton(i['total_units'], i['item_code']).get('units')
 
     return {
-        "load_form_item_data": load_form_item_data,
+        "load_form_item_data": load_form_item_data
     }
 
 
