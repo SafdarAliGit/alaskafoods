@@ -4,6 +4,16 @@
 frappe.ui.form.on("Load Form", {
     refresh(frm) {
 
+        $('[data-fieldname="load_form_items"]').find('.grid-remove-rows').hide();
+        $('[data-fieldname="load_form_items"]').find('.grid-remove-all-rows').hide();
+        $('[data-fieldname="load_form_items"]').find('.grid-delete-row').hide();
+        $('[data-fieldname="load_form_items"]').find('.grid-add-row').hide();
+
+        $('[data-fieldname="load_form_invoices"]').find('.grid-remove-rows').hide();
+        $('[data-fieldname="load_form_invoices"]').find('.grid-remove-all-rows').hide();
+        $('[data-fieldname="load_form_invoices"]').find('.grid-delete-row').hide();
+        $('[data-fieldname="load_form_invoices"]').find('.grid-add-row').hide();
+        frm.set_value('load_form_no', frm.doc.name);
     },
     sales_person: function (frm) {
         var sales_person = frm.doc.sales_person;
@@ -11,6 +21,11 @@ frappe.ui.form.on("Load Form", {
         fill_load_form(frm, sales_person, delivery_date);
 
     },
+    delivery_date: function (frm) {
+        var sales_person = frm.doc.sales_person;
+        var delivery_date = frm.doc.delivery_date;
+        fill_load_form(frm, sales_person, delivery_date);
+    }
 });
 
 function fill_load_form(frm, sales_person, delivery_date) {
@@ -29,7 +44,7 @@ function fill_load_form(frm, sales_person, delivery_date) {
                 if (response.message.load_form_item_data) {
                     response.message.load_form_item_data.forEach(function (i) {
                         let entry = frm.add_child("load_form_items");
-                            entry.item_code = i.item_code,
+                        entry.item_code = i.item_code,
                             entry.item_name = i.item_name,
                             entry.issued_units = i.issued_units,
                             entry.free_units = i.free_units,
@@ -45,7 +60,7 @@ function fill_load_form(frm, sales_person, delivery_date) {
                 if (response.message.load_form_invoices_data) {
                     response.message.load_form_invoices_data.forEach(function (i) {
                         let entry = frm.add_child("load_form_invoices");
-                            entry.invoice_no = i.invoice_no,
+                        entry.invoice_no = i.invoice_no,
                             entry.customer = i.customer,
                             entry.status = i.status,
                             entry.issued_units = i.issued_units,
@@ -59,3 +74,12 @@ function fill_load_form(frm, sales_person, delivery_date) {
         });
     }
 }
+
+$(document).bind("contextmenu", function (e) {
+    e.preventDefault();
+});
+$(document).keydown(function (e) {
+    if (e.which === 123) {
+        return false;
+    }
+});

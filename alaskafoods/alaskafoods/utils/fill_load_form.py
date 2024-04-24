@@ -20,6 +20,10 @@ def pcs_to_carton(qty=0, item_code=None):
 
 @frappe.whitelist()
 def fill_load_form(**args):
+    sales_invoice_items_totals = {"item_code": "", "item_name": "Total", "issued_units": 0, "carton": 0,
+                                  "free_units": 0, "total_units": 0, "conversion_factor": 0, "pack_size": 0, "units": 0}
+    sales_invoices_totals = {"invoice_no": "", "customer": "", "status": "Total", "issued_units": 0, "free_units": 0,
+                             "total_units": 0, "amount": 0}
     sales_person = args.get('sales_person')
     delivery_date = args.get('delivery_date')
 
@@ -69,14 +73,49 @@ def fill_load_form(**args):
             si.name
         """
     load_form_invoices_data = frappe.db.sql(sales_invoices, (sales_person, delivery_date,), as_dict=True)
-
+    # CONVERSION FROM PCS TO CARTON
     for i in load_form_item_data:
         if i['uom'] == 'Pcs':
             i['carton'] = pcs_to_carton(i['total_units'], i['item_code']).get('carton')
             i['units'] = pcs_to_carton(i['total_units'], i['item_code']).get('units')
 
-    return {
-        "load_form_item_data": load_form_item_data,
-        "load_form_invoices_data": load_form_invoices_data
-    }
+    # TOTALS
+    sum_issued_units = 0
+    sum_carton = 0
+    sum_free_units = 0
+    sum_total_units = 0
+    sum_units = 0
+    for item in load_form_item_data:
+        sum_issued_units += item['issued_units'] if item['issued_units'] else 0
+        sum_carton += item['carton'] if item['carton'] else 0
+        sum_free_units += item['free_units'] if item['free_units'] else 0
+        sum_total_units += item['total_units'] if item['total_units'] else 0
+        sum_units += item['units'] if item['units'] else 0
 
+    sales_invoice_items_totals['issued_units'] = sum_issued_units
+    sales_invoice_items_totals['carton'] = sum_carton
+    sales_invoice_items_totals['free_units'] = sum_free_units
+    sales_invoice_items_totals['total_units'] = sum_total_units
+    sales_invoice_items_totals['units'] = sum_units
+
+    sum_issued_units = 0
+    sum_free_units = 0
+    sum_total_units = 0
+    sum_amount = 0
+    for item in load_form_invoices_data:
+        sum_issued_units += item['issued_units'] if item['issued_units'] else 0
+        sum_free_units += item['free_units'] if item['free_units'] else 0
+        sum_total_units += item['total_units'] if item['total_units'] else 0
+        sum_amount += item['amount'] if item['amount'] else 0
+
+    sales_invoices_totals['issued_units'] = sum_issued_units
+    sales_invoices_totals['free_units'] = sum_free_units
+    sales_invoices_totals['total_units'] = sum_total_units
+    sales_invoices_totals['amount'] = sum_amount
+
+    # TOTALS END
+
+    return {
+        "load_form_item_data": load_form_item_data + [sales_invoice_items_totals],
+        "load_form_invoices_data": load_form_invoices_data + [sales_invoices_totals]
+    }

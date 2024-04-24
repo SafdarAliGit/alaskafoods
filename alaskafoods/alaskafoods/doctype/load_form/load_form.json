@@ -34,8 +34,9 @@
   },
   {
    "fieldname": "driver_name",
-   "fieldtype": "Data",
-   "label": "Driver Name"
+   "fieldtype": "Link",
+   "label": "Driver Name",
+   "options": "Driver"
   },
   {
    "default": "None",
@@ -52,8 +53,9 @@
   },
   {
    "fieldname": "vehicle",
-   "fieldtype": "Data",
-   "label": "Vehicle"
+   "fieldtype": "Link",
+   "label": "Vehicle",
+   "options": "Vehicle"
   },
   {
    "fieldname": "column_break_cgte",
@@ -101,7 +103,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-22 14:47:00.596755",
+ "modified": "2024-04-24 15:17:10.498829",
  "modified_by": "Administrator",
  "module": "alaskafoods",
  "name": "Load Form",
