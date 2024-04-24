@@ -55,7 +55,8 @@ def fill_load_form(**args):
             si.status,
             SUM(CASE WHEN sii.qty > 0 AND sii.uom = 'Carton' THEN sii.qty*sii.conversion_factor ELSE sii.qty END) AS issued_units,
             SUM(CASE WHEN sii.qty < 0 THEN ABS(sii.qty) ELSE 0 END) AS free_units,
-            ((SUM(CASE WHEN sii.qty > 0 AND sii.uom = 'Carton' THEN sii.qty*sii.conversion_factor ELSE sii.qty END)) + SUM(CASE WHEN sii.qty < 0 THEN ABS(sii.qty) ELSE 0 END)) AS total_units
+            ((SUM(CASE WHEN sii.qty > 0 AND sii.uom = 'Carton' THEN sii.qty*sii.conversion_factor ELSE sii.qty END)) + SUM(CASE WHEN sii.qty < 0 THEN ABS(sii.qty) ELSE 0 END)) AS total_units,
+            si.grand_total AS amount
         FROM
             `tabSales Invoice` AS si
         INNER JOIN 
