@@ -38,11 +38,17 @@ def fill_load_form(**args):
         (SUM(CASE WHEN sii.qty > 0 AND sii.uom = 'Pcs' THEN sii.qty ELSE 0 END) + SUM(CASE WHEN sii.qty < 0 THEN ABS(sii.qty) ELSE 0 END)) AS total_units,
         sii.conversion_factor,
         CASE WHEN sii.conversion_factor = 0 THEN 1 ELSE sii.conversion_factor END AS pack_size,
-        0 AS units
+        0 AS units,
+        IFNULL(SUM(ABS(ret_si_item.qty)), 0) AS returned
+        
     FROM
         `tabSales Invoice` AS si
     INNER JOIN 
         `tabSales Invoice Item` AS sii ON si.name = sii.parent
+    LEFT JOIN
+        `tabSales Invoice Item` AS ret_si_item ON si.name = ret_si_item.parent AND si.is_return = 1
+    LEFT JOIN
+        `tabSales Invoice` AS ret_si ON ret_si_item.parent = ret_si.name AND ret_si.return_against = si.name 
     WHERE
         si.docstatus = 1 AND
         si.custom_sales_person = %s AND 

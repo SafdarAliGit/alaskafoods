@@ -51,7 +51,8 @@ function fill_load_form(frm, sales_person, delivery_date) {
                             entry.total_units = i.total_units,
                             entry.carton = i.carton,
                             entry.units = i.units,
-                            entry.pack_size = i.conversion_factor
+                            entry.pack_size = i.conversion_factor,
+                            entry.returned = i.returned
 
                     });
                 }
