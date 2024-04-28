@@ -1,5 +1,6 @@
 import frappe
 
+
 def after_insert(doc, method):
     try:
         # Submit the Sales Order after update
@@ -27,9 +28,11 @@ def after_insert(doc, method):
             it.amount = items.amount
             it.so_detail = items.name
             it.uom = items.uom
-        spn = dn.append("sales_team", {})
-        spn.sales_person = so.custom_sales_person
-        spn.allocated_percentage = 100
+        for si_sp in so.sales_team:
+            spd = dn.append("sales_team", {})
+            spd.sales_person = si_sp.sales_person
+            spd.allocated_percentage = si_sp.allocated_percentage
+            spd.allocated_amount = si_sp.allocated_amount
         dn.submit()
         # ------Sales Invoice--------
 
@@ -51,9 +54,11 @@ def after_insert(doc, method):
             it.amount = items.amount
             it.so_detail = items.name
             it.uom = items.uom
-        spn = si.append("sales_team", {})
-        spn.sales_person = so.custom_sales_person
-        spn.allocated_percentage = 100
+        for si_sp in so.sales_team:
+            sps = si.append("sales_team", {})
+            sps.sales_person = si_sp.sales_person
+            sps.allocated_percentage = si_sp.allocated_percentage
+            sps.allocated_amount = si_sp.allocated_amount
         si.submit()
 
     except Exception as e:
