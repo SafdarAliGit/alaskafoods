@@ -2,7 +2,11 @@ import frappe
 
 def after_insert(doc, method):
     try:
-        # Submit the Sales Order
+        # Submit the Sales Order after update
+        spo = doc.append("sales_team", {})
+        spo.sales_person = doc.custom_sales_person
+        spo.allocated_percentage = 100
+
         doc.submit()
         # ------Delivery Note--------
         so = frappe.get_doc("Sales Order", doc.name)
@@ -51,7 +55,7 @@ def after_insert(doc, method):
         spn.sales_person = so.custom_sales_person
         spn.allocated_percentage = 100
         si.submit()
-        
+
     except Exception as e:
         frappe.throw(f"An error occurred: {e}")
 
