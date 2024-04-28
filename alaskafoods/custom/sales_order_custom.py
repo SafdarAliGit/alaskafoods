@@ -23,8 +23,10 @@ def after_insert(doc, method):
             it.amount = items.amount
             it.so_detail = items.name
             it.uom = items.uom
-        sp = dn.append("sales_team", {})
-        sp.sales_person = so.custom_sales_person
+        for si_sp in so.sales_team:
+            spd = dn.append("sales_team", {})
+            spd.sales_person = si_sp.sales_person
+            spd.allocated_percentage = si_sp.allocated_percentage
         dn.submit()
         # ------Sales Invoice--------
 
@@ -46,8 +48,10 @@ def after_insert(doc, method):
             it.amount = items.amount
             it.so_detail = items.name
             it.uom = items.uom
-        sp = si.append("sales_team", {})
-        sp.sales_person = so.custom_sales_person
+        for si_sp in so.sales_team:
+            sps = si.append("sales_team", {})
+            sps.sales_person = si_sp.sales_person
+            sps.allocated_percentage = si_sp.allocated_percentage
         si.submit()
 
     except Exception as e:
