@@ -1,4 +1,8 @@
+import frappe
+
+
 def after_insert(doc, method):
-    if doc.docstatus == 0:
-        # Submit the Sales Order
-        doc.submit()
+    dn = frappe.get_doc("Delivery Note", doc.name)
+    dn.submit()
+    doc.reload()
+

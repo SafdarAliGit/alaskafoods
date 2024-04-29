@@ -43,6 +43,7 @@ def after_insert(doc, method):
         si.custom_so = so.name
         si.set_warehouse = so.set_warehouse
         si.order_type = so.order_type
+        si.update_stock = 1
 
         for items in so.items:
             it = si.append("items", {})
