@@ -38,13 +38,8 @@ def execute(filters=None):
 
     # Custom
     for i in gross_profit_data.grouped_data:
-        if i['uom'] == 'Pcs':
-            i['carton'] = pcs_to_carton(i['qty'], i['item_code']).get('carton')
-            i['units'] = pcs_to_carton(i['qty'], i['item_code']).get('units')
-        elif i['uom'] == 'Carton':
-            i['carton'] = i['qty']
-        else:
-            pass
+        i['carton'] = pcs_to_carton(i['qty'], i['item_code']).get('carton')
+        i['units'] = pcs_to_carton(i['qty'], i['item_code']).get('units')
     # Custom end
 
     data = []
@@ -57,7 +52,6 @@ def execute(filters=None):
                 "customer_group",
                 "posting_date",
                 "item_code",
-                "conversion_factor",
                 "carton",
                 "units",
                 "item_name",
@@ -76,7 +70,6 @@ def execute(filters=None):
             ],
             "item_code": [
                 "item_code",
-                "conversion_factor",
                 "carton",
                 "units",
                 "item_name",
@@ -145,7 +138,6 @@ def execute(filters=None):
                 "sales_person",
                 "allocated_amount",
                 "qty",
-                "conversion_factor",
                 "carton",
                 "units",
                 "base_rate",
@@ -232,13 +224,6 @@ def get_columns(group_wise_columns, filters):
     columns = []
     column_map = frappe._dict(
         {
-            "conversion_factor": {
-                "label": _("Conversion Factor"),
-                "fieldname": "conversion_factor",
-                "fieldtype": "Float",
-                "width": 120
-
-            },
             "carton": {
                 "label": _("Carton"),
                 "fieldname": "carton",

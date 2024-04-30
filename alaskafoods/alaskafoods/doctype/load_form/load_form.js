@@ -67,7 +67,8 @@ function fill_load_form(frm, sales_person, delivery_date) {
                             entry.issued_units = i.issued_units,
                             entry.free_units = i.free_units,
                             entry.total_units = i.total_units,
-                            entry.amount = i.amount
+                            entry.amount = i.amount,
+                            entry.returned = i.returned
                     });
                 }
                 frm.refresh_field('load_form_invoices');
