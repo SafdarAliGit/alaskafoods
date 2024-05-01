@@ -241,6 +241,11 @@ doc_events = {
     }
 }
 
+# override_doctype_class = {
+#     "Sales Invoice": "alaskafoods.overrides.sales_invoice_overrides.SalesInvoiceOverrides",
+#     "Delivery Note": "alaskafoods.overrides.delivery_note_overrides.DeliveryNoteOverrides",
+# }
+
 required_apps = [
     'erpnext'
 ]

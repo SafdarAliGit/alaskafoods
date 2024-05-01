@@ -1,4 +1,5 @@
 import frappe
+from frappe.utils import add_days, today
 
 
 def after_insert(doc, method):
@@ -13,6 +14,7 @@ def after_insert(doc, method):
         so = frappe.get_doc("Sales Order", doc.name)
         dn = frappe.new_doc("Delivery Note")
         dn.custom_sales_person = so.custom_sales_person
+        dn.set_posting_time = 1
         dn.posting_date = so.delivery_date
         dn.customer = so.customer
         dn.custom_so = so.name
@@ -38,6 +40,7 @@ def after_insert(doc, method):
 
         si = frappe.new_doc("Sales Invoice")
         si.custom_sales_person = so.custom_sales_person
+        si.set_posting_time = 1
         si.posting_date = so.delivery_date
         si.customer = so.customer
         si.custom_so = so.name
