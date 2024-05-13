@@ -38,11 +38,13 @@ def group_data_by_sales_person(data):
             grouped_data[sales_person] = {
                 'carton': 0,
                 'qty': 0,
-                'amount': 0
+                'amount': 0,
+                'units': 0
             }
 
         # Sum up the carton, qty, and amount for the current sales person
         grouped_data[sales_person]['carton'] += entry['carton']
+        grouped_data[sales_person]['units'] += entry['units']
         grouped_data[sales_person]['qty'] += entry['qty']
         grouped_data[sales_person]['amount'] += entry['amount']
 
@@ -68,6 +70,12 @@ def get_columns():
         {
             "label": "<b>Carton</b>",
             "fieldname": "carton",
+            "fieldtype": "Data",
+            "width": 120
+        },
+        {
+            "label": "<b>Units</b>",
+            "fieldname": "units",
             "fieldtype": "Data",
             "width": 120
         },
@@ -107,7 +115,8 @@ def get_data(filters):
             SELECT 
                 inv.custom_sales_person AS sales_person,
                 inv_item.item_code AS item_code,
-                'Carton' AS carton,
+                0 AS carton,
+                0 AS units,
                 SUM(inv_item.qty) AS qty,
                 SUM(inv_item.amount) AS amount 
             FROM 
@@ -125,6 +134,7 @@ def get_data(filters):
     sales_result = frappe.db.sql(sales_query, filters, as_dict=1)
     for i in sales_result:
         i['carton'] = pcs_to_carton(i['qty'], i['item_code']).get('carton')
+        i['units'] = pcs_to_carton(i['qty'], i['item_code']).get('units')
 
     grouped_data = group_data_by_sales_person(sales_result)
 
