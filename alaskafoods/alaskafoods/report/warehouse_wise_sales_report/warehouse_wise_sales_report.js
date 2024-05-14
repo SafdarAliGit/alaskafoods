@@ -1,8 +1,6 @@
-// Copyright (c) 2024, Safdar Ali and contributors
-// For license information, please see license.txt
-/* eslint-disable */
 
-frappe.query_reports["Sales Person Wise Sales Report"] = {
+
+frappe.query_reports["Warehouse Wise Sales Report"] = {
     "filters": [
         {
             label: __("From Date"),
@@ -18,12 +16,12 @@ frappe.query_reports["Sales Person Wise Sales Report"] = {
             default: frappe.datetime.get_today(),
             reqd: 1
         },
-
         {
-            label: __("Warehouse"),
-            fieldname: "warehouse",
+            label: __("Sales Person"),
+            fieldname: "sales_person",
             fieldtype: "Link",
-            options: "Warehouse"
+            options: "Sales Person"
+
         }
     ]
 };
