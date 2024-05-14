@@ -45,13 +45,13 @@ def group_data_by_sales_person(data):
 
 def get_columns():
     return [
-        {"label": "<b>Sales Person</b>", "fieldname": "set_warehouse", "fieldtype": "Link", "options": "Sales Person",
+        {"label": "<b>Warehouse</b>", "fieldname": "set_warehouse", "fieldtype": "Link", "options": "Sales Person",
          "width": 120},
-        {"label": "<b>Src. Carton</b>", "fieldname": "src_carton", "fieldtype": "Data", "width": 120},
-        {"label": "<b>Src. Qty</b>", "fieldname": "src_qty", "fieldtype": "Data", "width": 120},
-        {"label": "<b>Conv. Carton</b>", "fieldname": "conv_carton", "fieldtype": "Data", "width": 120},
+        # {"label": "<b>Src. Carton</b>", "fieldname": "src_carton", "fieldtype": "Data", "width": 120},
+        # {"label": "<b>Src. Qty</b>", "fieldname": "src_qty", "fieldtype": "Data", "width": 120},
+        # {"label": "<b>Conv. Carton</b>", "fieldname": "conv_carton", "fieldtype": "Data", "width": 120},
         {"label": "<b>Tot. Carton</b>", "fieldname": "tot_carton", "fieldtype": "Data", "width": 120},
-        {"label": "<b>Conv. Qty</b>", "fieldname": "conv_qty", "fieldtype": "Data", "width": 120},
+        {"label": "<b>Qty</b>", "fieldname": "conv_qty", "fieldtype": "Data", "width": 120},
         {"label": "<b>Amount</b>", "fieldname": "amount", "fieldtype": "Currency", "width": 120}
     ]
 
@@ -62,8 +62,6 @@ def get_conditions(filters):
         conditions.append("inv.posting_date >= %(from_date)s")
     if filters.get("to_date"):
         conditions.append("inv.posting_date <= %(to_date)s")
-    if filters.get("sales_person"):
-        conditions.append("inv.custom_sales_person = %(sales_person)s")
     return " AND ".join(conditions)
 
 

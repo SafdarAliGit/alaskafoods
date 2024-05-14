@@ -15,13 +15,6 @@ frappe.query_reports["Warehouse Wise Sales Report"] = {
             fieldtype: "Date",
             default: frappe.datetime.get_today(),
             reqd: 1
-        },
-        {
-            label: __("Sales Person"),
-            fieldname: "sales_person",
-            fieldtype: "Link",
-            options: "Sales Person"
-
         }
     ]
 };

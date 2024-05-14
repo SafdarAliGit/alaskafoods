@@ -31,7 +31,8 @@ def group_data_by_sales_person(data):
                 'conv_carton': 0,
                 'tot_carton': 0,
                 'conv_qty': 0,
-                'amount': 0
+                'amount': 0,
+                'unique_customers': 0
             }
         grouped_data[sales_person]['src_carton'] += entry['src_carton']
         grouped_data[sales_person]['src_qty'] += entry['src_qty']
@@ -40,6 +41,7 @@ def group_data_by_sales_person(data):
         grouped_data[sales_person]['conv_qty'] += entry['conv_qty']
         grouped_data[sales_person]['amount'] += entry['amount']
         grouped_data[sales_person]['item_code'] = entry['item_code']
+        grouped_data[sales_person]['unique_customers'] = entry['unique_customers']
     return grouped_data
 
 
@@ -47,11 +49,12 @@ def get_columns():
     return [
         {"label": "<b>Sales Person</b>", "fieldname": "sales_person", "fieldtype": "Link", "options": "Sales Person",
          "width": 120},
-        {"label": "<b>Src. Carton</b>", "fieldname": "src_carton", "fieldtype": "Data", "width": 120},
-        {"label": "<b>Src. Qty</b>", "fieldname": "src_qty", "fieldtype": "Data", "width": 120},
-        {"label": "<b>Conv. Carton</b>", "fieldname": "conv_carton", "fieldtype": "Data", "width": 120},
+        # {"label": "<b>Src. Carton</b>", "fieldname": "src_carton", "fieldtype": "Data", "width": 120},
+        # {"label": "<b>Src. Qty</b>", "fieldname": "src_qty", "fieldtype": "Data", "width": 120},
+        # {"label": "<b>Conv. Carton</b>", "fieldname": "conv_carton", "fieldtype": "Data", "width": 120},
         {"label": "<b>Tot. Carton</b>", "fieldname": "tot_carton", "fieldtype": "Data", "width": 120},
-        {"label": "<b>Conv. Qty</b>", "fieldname": "conv_qty", "fieldtype": "Data", "width": 120},
+        {"label": "<b>Qty</b>", "fieldname": "conv_qty", "fieldtype": "Data", "width": 120},
+        {"label": "<b>Customers</b>", "fieldname": "unique_customers", "fieldtype": "Data", "width": 120},
         {"label": "<b>Amount</b>", "fieldname": "amount", "fieldtype": "Currency", "width": 120}
     ]
 
@@ -74,6 +77,7 @@ def get_data(filters):
             inv_item.item_code,
             SUM(CASE WHEN inv_item.uom='Carton' THEN inv_item.qty ELSE 0 END) AS src_carton,
             SUM(CASE WHEN inv_item.uom !='Carton' THEN inv_item.qty ELSE 0 END) AS src_qty,
+            COUNT(DISTINCT inv.customer) AS unique_customers,
             SUM(inv_item.amount) AS amount 
         FROM 
             `tabSales Invoice` AS inv
