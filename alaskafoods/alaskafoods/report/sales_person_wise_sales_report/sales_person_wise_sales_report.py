@@ -87,7 +87,7 @@ def get_data(filters):
             AND inv.is_return = 0
             AND {conditions}
         GROUP BY
-            inv.custom_sales_person, inv_item.item_code
+            inv.custom_sales_person
     """.format(conditions=get_conditions(filters))
 
     sales_result = frappe.db.sql(sales_query, filters, as_dict=True)
