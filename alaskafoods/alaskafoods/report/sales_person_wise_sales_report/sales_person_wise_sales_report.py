@@ -34,7 +34,8 @@ def group_data_by_sales_person(data):
                 'amount': 0,
                 'unique_customers': 0,
                 'invoices': 0,
-                'drop_size': 0
+                'drop_size': 0,
+                'sku': 0
             }
         grouped_data[sales_person]['src_carton'] += entry['src_carton']
         grouped_data[sales_person]['src_qty'] += entry['src_qty']
@@ -46,6 +47,7 @@ def group_data_by_sales_person(data):
         grouped_data[sales_person]['unique_customers'] += entry['unique_customers']
         grouped_data[sales_person]['invoices'] += entry['invoices']
         grouped_data[sales_person]['drop_size'] += entry['drop_size']
+        grouped_data[sales_person]['sku'] = entry['sku']
     return grouped_data
 
 
@@ -61,6 +63,7 @@ def get_columns():
         {"label": "<b>Customers</b>", "fieldname": "unique_customers", "fieldtype": "Data", "width": 120},
         {"label": "<b>Invoices</b>", "fieldname": "invoices", "fieldtype": "Data", "width": 120},
         {"label": "<b>Drop Size</b>", "fieldname": "drop_size", "fieldtype": "Data", "width": 120},
+        {"label": "<b>Sku</b>", "fieldname": "sku", "fieldtype": "Data", "width": 120},
         {"label": "<b>Amount</b>", "fieldname": "amount", "fieldtype": "Currency", "width": 120}
     ]
 
@@ -86,6 +89,7 @@ def get_data(filters):
             COUNT(DISTINCT inv.customer) AS unique_customers,
             COUNT(DISTINCT inv.name) AS invoices,
             ROUND(SUM(inv_item.amount)/COUNT(DISTINCT inv.name),2) AS drop_size,
+            ROUND(SUM(DISTINCT inv_item.item_code)/COUNT(DISTINCT inv.name),2) AS sku,
             SUM(inv_item.amount) AS amount 
         FROM 
             `tabSales Invoice` AS inv
