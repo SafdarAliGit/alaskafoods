@@ -41,7 +41,7 @@ def group_data_by_sales_person(data):
         grouped_data[sales_person]['conv_qty'] += entry['conv_qty']
         grouped_data[sales_person]['amount'] += entry['amount']
         grouped_data[sales_person]['item_code'] = entry['item_code']
-        grouped_data[sales_person]['unique_customers'] = entry['unique_customers']
+        grouped_data[sales_person]['unique_customers'] += entry['unique_customers']
     return grouped_data
 
 
