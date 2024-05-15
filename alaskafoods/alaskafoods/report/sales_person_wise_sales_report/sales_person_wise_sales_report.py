@@ -32,7 +32,9 @@ def group_data_by_sales_person(data):
                 'tot_carton': 0,
                 'conv_qty': 0,
                 'amount': 0,
-                'unique_customers': 0
+                'unique_customers': 0,
+                'invoices': 0,
+                'drop_size': 0
             }
         grouped_data[sales_person]['src_carton'] += entry['src_carton']
         grouped_data[sales_person]['src_qty'] += entry['src_qty']
@@ -42,6 +44,8 @@ def group_data_by_sales_person(data):
         grouped_data[sales_person]['amount'] += entry['amount']
         grouped_data[sales_person]['item_code'] = entry['item_code']
         grouped_data[sales_person]['unique_customers'] += entry['unique_customers']
+        grouped_data[sales_person]['invoices'] += entry['invoices']
+        grouped_data[sales_person]['drop_size'] += entry['drop_size']
     return grouped_data
 
 
@@ -55,6 +59,8 @@ def get_columns():
         {"label": "<b>Tot. Carton</b>", "fieldname": "tot_carton", "fieldtype": "Data", "width": 120},
         {"label": "<b>Qty</b>", "fieldname": "conv_qty", "fieldtype": "Data", "width": 120},
         {"label": "<b>Customers</b>", "fieldname": "unique_customers", "fieldtype": "Data", "width": 120},
+        {"label": "<b>Invoices</b>", "fieldname": "invoices", "fieldtype": "Data", "width": 120},
+        {"label": "<b>Drop Size</b>", "fieldname": "drop_size", "fieldtype": "Data", "width": 120},
         {"label": "<b>Amount</b>", "fieldname": "amount", "fieldtype": "Currency", "width": 120}
     ]
 
@@ -78,6 +84,8 @@ def get_data(filters):
             SUM(CASE WHEN inv_item.uom='Carton' THEN inv_item.qty ELSE 0 END) AS src_carton,
             SUM(CASE WHEN inv_item.uom !='Carton' THEN inv_item.qty ELSE 0 END) AS src_qty,
             COUNT(DISTINCT inv.customer) AS unique_customers,
+            COUNT(DISTINCT inv.name) AS invoices,
+            ROUND(SUM(inv_item.amount)/COUNT(DISTINCT inv.name),2) AS drop_size,
             SUM(inv_item.amount) AS amount 
         FROM 
             `tabSales Invoice` AS inv
