@@ -103,10 +103,29 @@ def get_data(filters):
     sales_result = frappe.db.sql(sales_query, filters, as_dict=True)
 
     data = []
+    totals = {'set_warehouse': 'TOTAL', 'tot_carton': 0, 'conv_qty': 0, 'unique_customers': 0, 'invoices': 0,
+              'drop_size': 0, 'sku': 0, 'amount': 0}
     for row in sales_result:
         row['conv_carton'], row['conv_qty'] = pcs_to_carton(row['src_qty'], row['item_code']).values()
         row['tot_carton'] = row['conv_carton'] + row['src_carton']
         data.append(row)
 
     grouped_data = group_data_by_sales_person(data)
-    return [{'set_warehouse': k, **v} for k, v in grouped_data.items()]
+    gd = [{'set_warehouse': k, **v} for k, v in grouped_data.items()]
+    for i in gd:
+        totals['tot_carton'] += i['tot_carton']
+        totals['conv_qty'] += i['conv_qty']
+        totals['unique_customers'] += i['unique_customers']
+        totals['invoices'] += i['invoices']
+        totals['drop_size'] += i['drop_size']
+        totals['sku'] += i['sku']
+        totals['amount'] += i['amount']
+    totals['drop_size'] = round(totals['drop_size'] / len(gd), 2)
+    totals['sku'] = round(totals['sku'] / len(gd), 2)
+    # make bolder
+    keys = list(totals.keys())
+    for k in keys[1:-1]:
+        totals[k] = f"<b>{totals[k]}</b>"
+    gd.append(totals)
+
+    return gd
