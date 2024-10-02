@@ -25,6 +25,8 @@ def get_data_column(filters, partner_doctype):
 	)
 
 	rows = get_data(filters, period_list, partner_doctype)
+
+	print(rows)
 	columns = get_columns(filters, period_list, partner_doctype)
 
 	if not rows:
@@ -42,6 +44,7 @@ def get_data(filters, period_list, partner_doctype):
 	sales_field = frappe.scrub(partner_doctype)
 	sales_users_data = get_parents_data(filters, partner_doctype)
 
+
 	if not sales_users_data:
 		return
 	sales_users = []
@@ -58,7 +61,7 @@ def get_data(filters, period_list, partner_doctype):
 	date_field = "transaction_date" if filters.get("doctype") == "Sales Order" else "posting_date"
 
 	actual_data = get_actual_data(filters, sales_users, date_field, sales_field)
-
+	print(sales_user_wise_item_groups)
 
 	return prepare_data(
 		filters,
@@ -178,7 +181,6 @@ def prepare_data(
 			rows.setdefault(key, {"total_target": 0, "total_achieved": 0, "total_variance": 0})
 
 		details = rows[key]
-
 		for period in period_list:
 			p_key = period.key
 			if p_key not in details:
