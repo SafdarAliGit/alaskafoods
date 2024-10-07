@@ -226,20 +226,20 @@ doc_events = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-doc_events = {
-    "Sales Invoice": {
-        "after_insert": "alaskafoods.custom.sales_invoice_custom.after_insert"
-    },
-    "Sales Order": {
-        "after_insert": "alaskafoods.custom.sales_order_custom.after_insert"
-    },
-    "Delivery Note": {
-        "after_insert": "alaskafoods.custom.delivery_note_custom.after_insert"
-    },
-    "Payment Entry": {
-        "after_insert": "alaskafoods.custom.payment_entry_custom.after_insert"
-    }
-}
+# doc_events = {
+#     "Sales Invoice": {
+#         "after_insert": "alaskafoods.custom.sales_invoice_custom.after_insert"
+#     },
+#     "Sales Order": {
+#         "after_insert": "alaskafoods.custom.sales_order_custom.after_insert"
+#     },
+#     "Delivery Note": {
+#         "after_insert": "alaskafoods.custom.delivery_note_custom.after_insert"
+#     },
+#     "Payment Entry": {
+#         "after_insert": "alaskafoods.custom.payment_entry_custom.after_insert"
+#     }
+# }
 
 # override_doctype_class = {
 #     "Sales Invoice": "alaskafoods.overrides.sales_invoice_overrides.SalesInvoiceOverrides",
